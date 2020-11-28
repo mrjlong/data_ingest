@@ -1,0 +1,89 @@
+---
+# ------------------------------------------------------------------------------
+# General Properties
+# ------------------------------------------------------------------------------
+id: "mysql-compass"
+name: "RDS CompassDB"
+type: "tap-mysql"
+owner: "de@upside.com"
+
+# ------------------------------------------------------------------------------
+# Source (Tap) - MySQL/ MariaDB connection details
+# ------------------------------------------------------------------------------
+hard_delete: False # don't remove rows, flag em as deleted.
+add_metadata_columns: True # add the _sdc columns
+
+db_conn:
+  host: ${MYSQL_COMPASS_HOST}
+  port: 3306
+  user: ${MYSQL_COMPASS_USERNAME}
+  password: "${MYSQL_COMPASS_PASSWORD}"
+  dbname: "compass"
+  export_batch_rows: 5000
+
+# ------------------------------------------------------------------------------
+# Destination (Target) - Target properties
+# Connection details should be in the relevant target YAML file
+# ------------------------------------------------------------------------------
+target: "snowflake" # ID of the target connector where the data will be loaded
+batch_size_rows: 20000 # Batch size for the stream to optimise load performance
+
+# ------------------------------------------------------------------------------
+# Source to target Schema mapping
+# ------------------------------------------------------------------------------
+schemas:
+- source_schema: "compass"
+  target_schema: "compass"
+  tables:
+    - table_name: "compass_action"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_criteria"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_event"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_event_status"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_feedback"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_feedback_value"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_audit_standard"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_certification"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_certification_skill"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_content_type"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_duty_status"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_role"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_role_action"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_skill"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_skill_duty_status"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_skill_duty_status_settings"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_tag"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_tag_case"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_tag_conversation"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_tag_package"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_tag_person"
+      replication_method: "LOG_BASED"
+    - table_name: "compass_user_role"
+      replication_method: "LOG_BASED"
+    - table_name: "work_assignment"
+      replication_method: "LOG_BASED"
+    - table_name: "work_assignment_history"
+      replication_method: "LOG_BASED"
+    - table_name: "work_priority_factor"  
+      replication_method: "LOG_BASED"

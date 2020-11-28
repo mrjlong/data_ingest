@@ -1,0 +1,57 @@
+---
+# ------------------------------------------------------------------------------
+# General Properties
+# ------------------------------------------------------------------------------
+id: "mysql-lender"
+name: "RDS LenderDB"
+type: "tap-mysql"
+owner: "de@upside.com"
+
+# ------------------------------------------------------------------------------
+# Source (Tap) - MySQL/ MariaDB connection details
+# ------------------------------------------------------------------------------
+hard_delete: False # don't remove rows, flag em as deleted.
+add_metadata_columns: True # add the _sdc columns
+
+db_conn:
+  host: ${MYSQL_LENDER_HOST}
+  port: 3306
+  user: ${MYSQL_LENDER_USERNAME}
+  password: "${MYSQL_LENDER_PASSWORD}"
+  dbname: "lender"
+  export_batch_rows: 5000
+
+# ------------------------------------------------------------------------------
+# Destination (Target) - Target properties
+# Connection details should be in the relevant target YAML file
+# ------------------------------------------------------------------------------
+target: "snowflake" # ID of the target connector where the data will be loaded
+batch_size_rows: 20000 # Batch size for the stream to optimise load performance
+
+# ------------------------------------------------------------------------------
+# Source to target Schema mapping
+# ------------------------------------------------------------------------------
+schemas:
+- source_schema: "lender"
+  target_schema: "lender"
+  tables:
+    - table_name: "business_type"
+      replication_method: "LOG_BASED"
+    - table_name: "document"
+      replication_method: "LOG_BASED"
+    - table_name: "document_category"
+      replication_method: "LOG_BASED"
+    - table_name: "loan"
+      replication_method: "LOG_BASED"
+    - table_name: "loan_event"
+      replication_method: "LOG_BASED"
+    - table_name: "loan_event_code"
+      replication_method: "LOG_BASED"
+    - table_name: "loan_meta_data"
+      replication_method: "LOG_BASED"
+    - table_name: "loan_status"
+      replication_method: "LOG_BASED"
+    - table_name: "migrations"
+      replication_method: "LOG_BASED"
+    - table_name: "tenant"
+      replication_method: "LOG_BASED"
