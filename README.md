@@ -12,7 +12,7 @@ To run the taps configured in this repo, you'll need to have the pipelinewise cl
 1. Clone the pipelinewise repo and build your docker image
 
 ```bash
-git clone https://github.com/PotomacInnovation/pipelinewise.git
+git clone https://github.com/mrjlong/pipelinewise.git
 cd pipelinewise
 make image
 ```
